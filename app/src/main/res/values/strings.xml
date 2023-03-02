@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TestRetrofit</string>
+
+    <!--    Menu Bottom Navigation-->
+    <string name="popular">Популярное</string>
+    <string name="favourites">Избранное</string>
+
+    <!--    Menu Top Navigation-->
+    <string name="sort">Сортировка</string>
+</resources>
