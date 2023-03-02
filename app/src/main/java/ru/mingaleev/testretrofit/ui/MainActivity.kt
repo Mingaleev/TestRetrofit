@@ -2,12 +2,11 @@ package ru.mingaleev.testretrofit.ui
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.ActivityMainBinding
-import ru.mingaleev.testrv.ui.popular.PopularFragment
+import ru.mingaleev.testretrofit.ui.popular.PopularFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.bottom_menu_favourites -> {
                     TODO()
-//                    navigateTo(EarthFragment()); true
                 }
                 else -> true
             }
@@ -38,28 +36,7 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun navigateTo(fragment: Fragment) {
-        val commit = supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
 }
-
-//    private val viewModel by lazy {
-//        ViewModelProvider(this)[MainActivityViewModel::class.java]
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//
-//        val textView: TextView = findViewById(R.id.text_view)
-//
-//        val observer = Observer<CurrenciesDTO> { newCur ->
-//            textView.text = newCur.rates.toString()
-//        }
-//        viewModel.ratesList.observe(this, observer)
-//        viewModel.getCurrencyList()
-//    }
