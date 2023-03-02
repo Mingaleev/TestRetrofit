@@ -1,4 +1,4 @@
-package ru.mingaleev.testrv.ui.popular
+package ru.mingaleev.testretrofit.ui.popular
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,15 +8,12 @@ import ru.mingaleev.testretrofit.data.RepositoryRemote
 import ru.mingaleev.testretrofit.data.dto.Rate
 import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
 
-class PopularViewModel(
-) : ViewModel() {
+class PopularViewModel: ViewModel() {
 
     private val repositoryMA: RepositoryRemote = RepositoryRemoteImp()
 
-    val ratesList: MutableLiveData<
-            List<Rate>> by lazy {
-        MutableLiveData <
-                List<Rate>>()
+    val ratesList: MutableLiveData<List<Rate>> by lazy {
+        MutableLiveData <List<Rate>>()
     }
 
     fun getCurrencyList() {

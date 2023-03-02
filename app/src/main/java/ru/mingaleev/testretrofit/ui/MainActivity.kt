@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.ActivityMainBinding
-import ru.mingaleev.testrv.ui.popular.PopularFragment
+import ru.mingaleev.testretrofit.ui.popular.PopularFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateTo(fragment: Fragment) {
-        val commit = supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
 }
 

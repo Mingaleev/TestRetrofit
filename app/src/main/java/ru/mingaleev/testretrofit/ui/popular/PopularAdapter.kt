@@ -1,4 +1,4 @@
-package ru.mingaleev.testrv.ui.popular
+package ru.mingaleev.testretrofit.ui.popular
 
 import android.view.LayoutInflater
 import android.view.View
