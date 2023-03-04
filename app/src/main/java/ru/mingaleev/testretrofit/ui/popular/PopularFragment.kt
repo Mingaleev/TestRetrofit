@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ru.mingaleev.testretrofit.R
-import ru.mingaleev.testretrofit.data.dto.Currency
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
 
 class PopularFragment : Fragment(R.layout.fragment_popular) {
@@ -26,11 +24,30 @@ class PopularFragment : Fragment(R.layout.fragment_popular) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val observer = Observer<List<Currency>> { newCurrenciesDTO ->
-            binding.popularFragmentRecyclerView.adapter = PopularAdapter(newCurrenciesDTO)
+        viewModel.ratesList.observe(viewLifecycleOwner) {
+            renderData(it)
         }
-        viewModel.ratesList.observe(viewLifecycleOwner, observer)
         viewModel.getCurrencyList()
+
+        binding.buttonUpdate.setOnClickListener {
+            viewModel.getCurrencyList()
+        }
+    }
+
+    private fun renderData(appStatePopular: AppStatePopular) {
+        when (appStatePopular) {
+            is AppStatePopular.SuccessListExchange -> {
+                binding.popularFragmentRecyclerView.visibility = View.VISIBLE
+                binding.popularFragmentRecyclerView.adapter =
+                    PopularAdapter(appStatePopular.currenciesList)
+                binding.errorMessageTextView.visibility = View.GONE
+                binding.buttonUpdate.visibility = View.GONE
+            }
+            is AppStatePopular.Error -> {
+                binding.popularFragmentRecyclerView.visibility = View.GONE
+                binding.errorMessageTextView.visibility = View.VISIBLE
+                binding.buttonUpdate.visibility = View.VISIBLE
+            }
+        }
     }
 }
