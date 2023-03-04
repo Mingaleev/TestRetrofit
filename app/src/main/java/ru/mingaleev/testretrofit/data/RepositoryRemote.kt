@@ -1,7 +1,7 @@
 package ru.mingaleev.testretrofit.data
 
-import ru.mingaleev.testretrofit.data.dto.Rate
+import ru.mingaleev.testretrofit.data.dto.Currency
 
 interface RepositoryRemote {
-    suspend fun getExchange(base: String): List<Rate>
+    suspend fun getExchange(base: String): List<Currency>
 }
