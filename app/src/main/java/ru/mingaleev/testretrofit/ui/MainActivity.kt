@@ -17,6 +17,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, PopularFragment()).commit()
+        }
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_menu_popular -> {
@@ -28,12 +33,6 @@ class MainActivity : AppCompatActivity() {
                 else -> true
             }
         }
-        binding.bottomNavigationView.selectedItemId = R.id.bottom_menu_popular
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_top, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     private fun navigateTo(fragment: Fragment) {

@@ -24,10 +24,10 @@ class PopularFragment : Fragment(R.layout.fragment_popular) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.ratesList.observe(viewLifecycleOwner) {
+
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-        viewModel.getCurrencyList()
 
         binding.buttonUpdate.setOnClickListener {
             viewModel.getCurrencyList()

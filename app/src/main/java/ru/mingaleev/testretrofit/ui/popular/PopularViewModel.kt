@@ -7,12 +7,17 @@ import kotlinx.coroutines.launch
 import ru.mingaleev.testretrofit.data.RepositoryRemote
 import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
 
-class PopularViewModel: ViewModel() {
-
+class PopularViewModel(
+    private val ratesList: MutableLiveData<AppStatePopular> = MutableLiveData<AppStatePopular>(),
     private val repositoryMA: RepositoryRemote = RepositoryRemoteImp()
+) : ViewModel() {
 
-    val ratesList: MutableLiveData<AppStatePopular> by lazy {
-        MutableLiveData<AppStatePopular>()
+    init {
+        getCurrencyList()
+    }
+
+    fun getLiveData(): MutableLiveData<AppStatePopular> {
+        return ratesList
     }
 
     fun getCurrencyList() {
@@ -24,4 +29,4 @@ class PopularViewModel: ViewModel() {
             }
         }
     }
-    }
+}
