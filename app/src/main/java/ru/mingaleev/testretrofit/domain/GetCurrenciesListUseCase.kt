@@ -11,13 +11,12 @@ class GetCurrenciesListUseCase(
     private val repository: RepositoryRemote = RepositoryRemoteImp(),
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-    suspend operator fun invoke(): List<Currency> =
+    suspend operator fun invoke(base: String): List<Currency> =
         withContext(defaultDispatcher) {
             val currencies: CurrenciesDTO? = null
             val listCurrency = currencies.let {
-                repository.getExchange("USD")
+                repository.getExchange(base)
             }.currencies.toList().map { Currency(it.first, it.second) }
             listCurrency
         }
-
 }

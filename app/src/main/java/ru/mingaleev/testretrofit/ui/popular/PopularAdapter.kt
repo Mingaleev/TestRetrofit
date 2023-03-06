@@ -1,10 +1,11 @@
 package ru.mingaleev.testretrofit.ui.popular
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.mingaleev.testretrofit.data.dto.Currency
+import ru.mingaleev.testretrofit.domain.Currency
 import ru.mingaleev.testretrofit.databinding.FragmentPopularRecyclerItemBinding
 
 class PopularAdapter(private val dataList: List<Currency>): RecyclerView.Adapter<PopularAdapter.CurrencyViewHolder>() {

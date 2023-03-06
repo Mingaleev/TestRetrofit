@@ -8,6 +8,6 @@ class RepositoryRemoteImp: RepositoryRemote {
     override suspend fun getExchange(base: String): CurrenciesDTO {
         return MyApp.retrofit
             .create(APIService::class.java)
-            .getExchange(key = "6mW1CWVu2AjDX796hZ24JIu67dyeTRSS", base = base)
+            .getExchange(base)
     }
 }
