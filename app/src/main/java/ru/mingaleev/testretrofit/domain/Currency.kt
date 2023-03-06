@@ -1,4 +1,4 @@
-package ru.mingaleev.testretrofit.data.dto
+package ru.mingaleev.testretrofit.domain
 
 data class Currency(
     val name: String,
