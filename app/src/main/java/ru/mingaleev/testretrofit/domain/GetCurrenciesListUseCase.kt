@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 import ru.mingaleev.testretrofit.data.RepositoryRemote
 import ru.mingaleev.testretrofit.data.dto.CurrenciesDTO
 import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
+import ru.mingaleev.testretrofit.domain.entity.Currency
 
 class GetCurrenciesListUseCase(
     private val repository: RepositoryRemote = RepositoryRemoteImp(),

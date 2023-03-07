@@ -32,7 +32,7 @@ class MyApp : Application() {
         api_interceptor = Interceptor {
             val originalRequest = it.request()
             val newHttpUrl = originalRequest.url.newBuilder()
-                .addQueryParameter("apikey", "6mW1CWVu2AjDX796hZ24JIu67dyeTRSS")
+                .addQueryParameter("apikey", BuildConfig.EXCHANGE_API_KEY)
                 .build()
             val newRequest = originalRequest.newBuilder()
                 .url(newHttpUrl)
