@@ -8,8 +8,8 @@ interface CurrencyDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(currency: CurrencyRoom)
 
-    @Delete
-    suspend fun delete(currency: CurrencyRoom)
+    @Query("DELETE FROM currency WHERE name = :name")
+    fun deleteByName(name: String)
 
     @Query("SELECT * FROM currency")
     suspend fun get(): List<CurrencyRoom>

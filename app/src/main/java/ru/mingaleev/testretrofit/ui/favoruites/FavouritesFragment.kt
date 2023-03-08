@@ -42,7 +42,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
                 is AppStateFavourites.SuccessListExchange -> {
                     it.favouritesFragmentRecyclerView.isVisible = true
                     it.favouritesFragmentRecyclerView.adapter =
-                        FavouritesAdapter(appStateFavourites.currenciesList)
+                        FavouritesAdapter(appStateFavourites.currenciesList, callbackAdd)
                     it.errorMessageTextView.isVisible = false
                     it.buttonUpdate.isVisible = false
                 }
@@ -53,6 +53,10 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
                 }
             }
         }
+    }
+
+    private val callbackAdd = RemoveItem {
+        viewModel.removeInDB(it)
     }
 
     override fun onDestroyView() {

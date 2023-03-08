@@ -1,26 +1,30 @@
 package ru.mingaleev.testretrofit.ui.favoruites
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.mingaleev.testretrofit.domain.entity.Currency
+import ru.mingaleev.testretrofit.databinding.FragmentFavouritesRecyclerItemBinding
 import ru.mingaleev.testretrofit.databinding.FragmentPopularRecyclerItemBinding
+import ru.mingaleev.testretrofit.domain.entity.Currency
 
-class FavouritesAdapter(private val dataList: List<Currency>): RecyclerView.Adapter<FavouritesAdapter.CurrencyViewHolder>() {
+class FavouritesAdapter(private val dataList: List<Currency>, val callbackRemove: RemoveItem) :
+    RecyclerView.Adapter<FavouritesAdapter.CurrencyViewHolder>() {
 
     inner class CurrencyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(currency: Currency) {
-            FragmentPopularRecyclerItemBinding.bind(itemView).also {
+            FragmentFavouritesRecyclerItemBinding.bind(itemView).also {
                 it.currency.text = "${currency.name} = "
                 it.spot.text = currency.rate.toString()
+                it.removeFavoritesImageView.setOnClickListener {
+                    callbackRemove.delete(currency.name)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
-        val binding = FragmentPopularRecyclerItemBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = FragmentFavouritesRecyclerItemBinding.inflate(LayoutInflater.from(parent.context))
         return CurrencyViewHolder(binding.root)
     }
 

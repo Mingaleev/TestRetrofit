@@ -8,8 +8,8 @@ class RepositoryLocalImp: RepositoryLocal {
         MyApp.currenciesDb.currencyDao().insert(currency)
     }
 
-    override suspend fun delete(currency: CurrencyRoom) {
-        MyApp.currenciesDb.currencyDao().delete(currency)
+    override suspend fun delete(nameCurrency: String) {
+        MyApp.currenciesDb.currencyDao().deleteByName(nameCurrency)
     }
 
     override suspend fun get(): List<CurrencyRoom> {

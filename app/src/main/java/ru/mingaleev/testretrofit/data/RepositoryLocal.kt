@@ -10,7 +10,7 @@ interface RepositoryLocal {
     suspend fun insert(currency: CurrencyRoom)
 
     @Delete
-    suspend fun delete(currency: CurrencyRoom)
+    suspend fun delete(nameCurrency: String)
 
     @androidx.room.Query("SELECT * FROM currency")
     suspend fun get(): List<CurrencyRoom>

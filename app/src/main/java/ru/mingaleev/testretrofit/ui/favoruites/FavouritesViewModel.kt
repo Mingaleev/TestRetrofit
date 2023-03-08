@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.mingaleev.testretrofit.data.RepositoryRemote
-import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
 import ru.mingaleev.testretrofit.domain.GetCurrenciesListLocalUseCase
-import ru.mingaleev.testretrofit.domain.GetCurrenciesListRemoteUseCase
+import ru.mingaleev.testretrofit.domain.RemoveCurrencyLocalUseCase
 
 class FavouritesViewModel(
     private val getCurrenciesListUseCase: GetCurrenciesListLocalUseCase = GetCurrenciesListLocalUseCase(),
+    private val removeCurrencyLocalUseCase: RemoveCurrencyLocalUseCase = RemoveCurrencyLocalUseCase(),
 ) : ViewModel() {
 
     private val _ratesList: MutableLiveData<AppStateFavourites> = MutableLiveData<AppStateFavourites>()
@@ -29,6 +28,13 @@ class FavouritesViewModel(
             } catch (e: Exception) {
                 _ratesList.postValue(AppStateFavourites.Error(e))
             }
+        }
+    }
+
+    fun removeInDB(nameCurrency: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            removeCurrencyLocalUseCase.invoke(nameCurrency)
+            getCurrencyList()
         }
     }
 }
