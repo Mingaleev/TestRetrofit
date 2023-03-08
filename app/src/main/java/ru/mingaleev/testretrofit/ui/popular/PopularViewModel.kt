@@ -6,12 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.mingaleev.testretrofit.data.RepositoryRemote
-import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
-import ru.mingaleev.testretrofit.domain.GetCurrenciesListUseCase
+import ru.mingaleev.testretrofit.domain.AddCurrencyLocalUseCase
+import ru.mingaleev.testretrofit.domain.GetCurrenciesListRemoteUseCase
+import ru.mingaleev.testretrofit.domain.entity.Currency
 
 class PopularViewModel(
-    private val useCase: GetCurrenciesListUseCase = GetCurrenciesListUseCase()
+    private val getCurrencyListUseCase: GetCurrenciesListRemoteUseCase = GetCurrenciesListRemoteUseCase(),
+    private val addCurrencyToDBUseCase: AddCurrencyLocalUseCase = AddCurrencyLocalUseCase()
 ) : ViewModel() {
 
     private val _ratesList: MutableLiveData<AppStatePopular> = MutableLiveData<AppStatePopular>()
@@ -22,12 +23,18 @@ class PopularViewModel(
     }
 
     fun getCurrencyList() {
-        viewModelScope.launch() {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                _ratesList.postValue(AppStatePopular.SuccessListExchange(useCase.invoke()))
+                _ratesList.postValue(AppStatePopular.SuccessListExchange(getCurrencyListUseCase.invoke("USD")))
             } catch (e: Exception) {
                 _ratesList.postValue(AppStatePopular.Error(e))
             }
+        }
+    }
+
+    fun addToDB (currency: Currency) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addCurrencyToDBUseCase.invoke(currency)
         }
     }
 }

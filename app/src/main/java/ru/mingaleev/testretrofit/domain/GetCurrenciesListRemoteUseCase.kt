@@ -8,7 +8,7 @@ import ru.mingaleev.testretrofit.data.dto.CurrenciesDTO
 import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
 import ru.mingaleev.testretrofit.domain.entity.Currency
 
-class GetCurrenciesListUseCase(
+class GetCurrenciesListRemoteUseCase(
     private val repository: RepositoryRemote = RepositoryRemoteImp(),
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
