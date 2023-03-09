@@ -1,9 +1,9 @@
-package ru.mingaleev.testrv.data.room
+package ru.mingaleev.testretrofit.data.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
-@Database(entities = [Currency::class], version = 1)
+@Database(entities = [CurrencyRoom::class], version = 1)
 abstract class CurrencyDatabase: RoomDatabase() {
     abstract fun currencyDao(): CurrencyDAO
 }

@@ -8,7 +8,6 @@ import ru.mingaleev.testretrofit.data.dto.CurrenciesDTO
 interface APIService {
     @GET("latest")
     suspend fun getExchange(
-        @Header("apikey") key: String,
         @Query("base") base: String
     ): CurrenciesDTO
 

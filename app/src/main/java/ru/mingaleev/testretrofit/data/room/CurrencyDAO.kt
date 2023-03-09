@@ -1,18 +1,18 @@
-package ru.mingaleev.testrv.data.room
+package ru.mingaleev.testretrofit.data.room
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
 interface CurrencyDAO {
-    @Insert
-    suspend fun insert(currency: Currency)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(currency: CurrencyRoom)
 
-    @Delete
-    suspend fun delete(currency: Currency)
+    @Query("DELETE FROM currency WHERE name = :name")
+    fun deleteByName(name: String)
 
     @Query("SELECT * FROM currency")
-    suspend fun get(): List<Currency>
+    suspend fun get(): List<CurrencyRoom>
 }
