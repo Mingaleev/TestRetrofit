@@ -1,7 +1,9 @@
-package ru.mingaleev.testrv.data.room
+package ru.mingaleev.testretrofit.data.room
 
-import androidx.room.*
-import ru.mingaleev.testretrofit.data.room.CurrencyRoom
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface CurrencyDAO {

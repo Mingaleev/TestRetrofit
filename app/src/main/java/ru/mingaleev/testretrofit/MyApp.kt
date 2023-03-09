@@ -5,10 +5,9 @@ import androidx.room.Room
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.mingaleev.testrv.data.room.CurrencyDatabase
+import ru.mingaleev.testretrofit.data.room.CurrencyDatabase
 
 class MyApp : Application() {
 

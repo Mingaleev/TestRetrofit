@@ -14,6 +14,6 @@ class AddCurrencyLocalUseCase(
 ) {
     suspend operator fun invoke(currency: Currency) =
         withContext(defaultDispatcher) {
-            repository.insert(CurrencyRoom(0, currency.name, currency.rate))
+            repository.insert(CurrencyRoom(currency.name, currency.rate))
         }
 }
