@@ -1,23 +1,19 @@
 package ru.mingaleev.testretrofit.domain
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.mingaleev.testretrofit.data.RepositoryLocal
 import ru.mingaleev.testretrofit.data.RepositoryRemote
 import ru.mingaleev.testretrofit.data.dto.CurrenciesDTO
-import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
-import ru.mingaleev.testretrofit.data.room.CurrencyRoom
-import ru.mingaleev.testretrofit.data.room.RepositoryLocalImp
 import ru.mingaleev.testretrofit.domain.entity.Currency
+import javax.inject.Inject
 
-class GetCurrenciesListLocalUseCase(
-    private val repositoryRemote: RepositoryRemote = RepositoryRemoteImp(),
-    private val repositoryLocal: RepositoryLocal = RepositoryLocalImp(),
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+class GetCurrenciesListLocalUseCase @Inject constructor(
+    private val repositoryRemote: RepositoryRemote,
+    private val repositoryLocal: RepositoryLocal,
 ) {
     suspend operator fun invoke(base: String): List<Currency> =
-        withContext(defaultDispatcher) {
+        withContext(Dispatchers.IO) {
             val listCurrencyLocal = repositoryLocal.get().map { Currency(it.name, it.spot) }
             try {
                 val currencies: CurrenciesDTO? = null

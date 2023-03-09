@@ -1,18 +1,18 @@
 package ru.mingaleev.testretrofit.data.room
 
-import ru.mingaleev.testretrofit.MyApp
 import ru.mingaleev.testretrofit.data.RepositoryLocal
+import javax.inject.Inject
 
-class RepositoryLocalImp: RepositoryLocal {
+class RepositoryLocalImp @Inject constructor(private val currencyDb: CurrencyDatabase) : RepositoryLocal {
     override suspend fun insert(currency: CurrencyRoom) {
-        MyApp.currenciesDb.currencyDao().insert(currency)
+        currencyDb.currencyDao().insert(currency)
     }
 
     override suspend fun delete(nameCurrency: String) {
-        MyApp.currenciesDb.currencyDao().deleteByName(nameCurrency)
+        currencyDb.currencyDao().deleteByName(nameCurrency)
     }
 
     override suspend fun get(): List<CurrencyRoom> {
-        return MyApp.currenciesDb.currencyDao().get()
+        return currencyDb.currencyDao().get()
     }
 }

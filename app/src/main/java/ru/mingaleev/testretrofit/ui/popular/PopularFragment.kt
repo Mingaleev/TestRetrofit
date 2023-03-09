@@ -1,21 +1,27 @@
 package ru.mingaleev.testretrofit.ui.popular
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import ru.mingaleev.testretrofit.MyApp
 import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
+import javax.inject.Inject
 
-class PopularFragment : Fragment(R.layout.fragment_popular) {
+class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular) {
 
     private var binding: FragmentPopularBinding? = null
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[PopularViewModel::class.java]
+    @Inject
+    lateinit var viewModel: PopularViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApp).appComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

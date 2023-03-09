@@ -1,22 +1,27 @@
 package ru.mingaleev.testretrofit.ui.favoruites
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import ru.mingaleev.testretrofit.MyApp
 import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.FragmentFavouritesBinding
-import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
+import javax.inject.Inject
 
 class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
 
     private var binding: FragmentFavouritesBinding? = null
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[FavouritesViewModel::class.java]
+    @Inject
+    lateinit var viewModel: FavouritesViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApp).appComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

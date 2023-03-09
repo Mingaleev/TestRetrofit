@@ -8,10 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.mingaleev.testretrofit.domain.GetCurrenciesListLocalUseCase
 import ru.mingaleev.testretrofit.domain.RemoveCurrencyLocalUseCase
+import javax.inject.Inject
 
-class FavouritesViewModel(
-    private val getCurrenciesListUseCase: GetCurrenciesListLocalUseCase = GetCurrenciesListLocalUseCase(),
-    private val removeCurrencyLocalUseCase: RemoveCurrencyLocalUseCase = RemoveCurrencyLocalUseCase(),
+class FavouritesViewModel @Inject constructor(
+    private val getCurrenciesListUseCase: GetCurrenciesListLocalUseCase,
+    private val removeCurrencyLocalUseCase: RemoveCurrencyLocalUseCase
 ) : ViewModel() {
 
     private val _ratesList: MutableLiveData<AppStateFavourites> = MutableLiveData<AppStateFavourites>()
