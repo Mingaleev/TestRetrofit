@@ -18,14 +18,19 @@ class GetCurrenciesListLocalUseCase(
 ) {
     suspend operator fun invoke(base: String): List<Currency> =
         withContext(defaultDispatcher) {
-            val currencies: CurrenciesDTO? = null
-            val listCurrencyRemote = currencies.let {
-                repositoryRemote.getExchange(base)
-            }.currencies
             val listCurrencyLocal = repositoryLocal.get().map { Currency(it.name, it.spot) }
-            listCurrencyLocal.forEach {
-                it.rate = listCurrencyRemote[it.name]!!
+            try {
+                val currencies: CurrenciesDTO? = null
+                val listCurrencyRemote = currencies.let {
+                    repositoryRemote.getExchange(base)
+                }.currencies
+
+                listCurrencyLocal.forEach {
+                    it.rate = listCurrencyRemote[it.name]!!
+                }
+                listCurrencyLocal
+            } catch (e: Exception) {
+                listCurrencyLocal
             }
-            listCurrencyLocal
         }
 }
