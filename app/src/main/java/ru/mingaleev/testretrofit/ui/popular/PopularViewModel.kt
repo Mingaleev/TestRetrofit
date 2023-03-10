@@ -1,6 +1,5 @@
 package ru.mingaleev.testretrofit.ui.popular
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,9 @@ import ru.mingaleev.testretrofit.domain.AddCurrencyLocalUseCase
 import ru.mingaleev.testretrofit.domain.GetCurrenciesListRemoteUseCase
 import ru.mingaleev.testretrofit.domain.entity.Currency
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PopularViewModel @Inject constructor(
     private val getCurrencyListUseCase: GetCurrenciesListRemoteUseCase,
     private val addCurrencyToDBUseCase: AddCurrencyLocalUseCase
@@ -21,15 +22,14 @@ class PopularViewModel @Inject constructor(
     var ratesList: LiveData<AppStatePopular> = _ratesList
 
     init {
-        getCurrencyList()
+        getCurrencyList("AED")
     }
 
-    fun getCurrencyList() {
+    fun getCurrencyList(base: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _ratesList.postValue(AppStatePopular.SuccessListExchange(getCurrencyListUseCase.invoke("USD")))
+                _ratesList.postValue(AppStatePopular.SuccessListExchange(getCurrencyListUseCase.invoke(base)))
             } catch (e: Exception) {
-                e.message?.let { Log.d("MINGA", it) }
                 _ratesList.postValue(AppStatePopular.Error(e))
             }
         }
