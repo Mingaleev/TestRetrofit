@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import ru.mingaleev.testretrofit.domain.GetCurrenciesListLocalUseCase
-import ru.mingaleev.testretrofit.domain.RemoveCurrencyLocalUseCase
+import kotlinx.coroutines.*
+import ru.mingaleev.testretrofit.domain.entity.Currency
+import ru.mingaleev.testretrofit.domain.interactor.GetCurrenciesListLocalUseCase
+import ru.mingaleev.testretrofit.domain.interactor.GetCurrenciesListRemoteUseCase
+import ru.mingaleev.testretrofit.domain.interactor.RemoveCurrencyLocalUseCase
 import javax.inject.Inject
 
 class FavouritesViewModel @Inject constructor(
-    private val getCurrenciesListUseCase: GetCurrenciesListLocalUseCase,
+    private val getCurrenciesListLocalUseCase: GetCurrenciesListLocalUseCase,
+    private val getCurrenciesListRemoteUseCase: GetCurrenciesListRemoteUseCase,
     private val removeCurrencyLocalUseCase: RemoveCurrencyLocalUseCase
 ) : ViewModel() {
 
@@ -23,13 +25,28 @@ class FavouritesViewModel @Inject constructor(
     }
 
     fun getCurrencyList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                _ratesList.postValue(AppStateFavourites.SuccessListExchange(getCurrenciesListUseCase.invoke("USD")))
-            } catch (e: Exception) {
-                _ratesList.postValue(AppStateFavourites.Error(e))
+        val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+            _ratesList.postValue(AppStateFavourites.Error(exception))
+        }
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            val listLocal = async { getCurrenciesListLocalUseCase.invoke() }
+            val listRemote = async { getCurrenciesListRemoteUseCase.invoke("AED") }
+            val result = awaitAll(listLocal, listRemote)
+            _ratesList.postValue(
+                AppStateFavourites.SuccessListExchange(
+                    filter(result[0], result[1])
+                )
+            )
+        }
+    }
+
+    private fun filter(listLocal: List<Currency>, listRemote: List<Currency>): List<Currency> {
+        listLocal.forEach { local ->
+            listRemote.forEach {
+                if (it.name == local.name) local.rate = it.rate
             }
         }
+        return listLocal
     }
 
     fun removeInDB(nameCurrency: String) {

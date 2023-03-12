@@ -11,11 +11,11 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import ru.mingaleev.testretrofit.MyApp
-import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
 import javax.inject.Inject
 
-class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular), AdapterView.OnItemSelectedListener {
+
+class PopularFragment @Inject constructor() : Fragment(ru.mingaleev.testretrofit.R.layout.fragment_popular) {
 
     private var binding: FragmentPopularBinding? = null
     private var arrayAdapter: ArrayAdapter<String>? = null
@@ -50,26 +50,24 @@ class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular
     }
 
     private fun renderData(appStatePopular: AppStatePopular) {
-        binding?.also {
+        binding?.also { bind ->
             when (appStatePopular) {
                 is AppStatePopular.SuccessListExchange -> {
-                    it.popularFragmentRecyclerView.isVisible = true
-                    it.popularFragmentRecyclerView.adapter =
+                    bind.popularFragmentRecyclerView.isVisible = true
+                    bind.popularFragmentRecyclerView.adapter =
                         PopularAdapter(appStatePopular.currenciesList, callbackAdd)
-                    it.errorMessageTextView.isVisible = false
-                    it.buttonUpdate.isVisible = false
+                    bind.errorMessageTextView.isVisible = false
+                    bind.buttonUpdate.isVisible = false
 
                     if (arrayResource.isEmpty()) {
-                        appStatePopular.currenciesList.forEach { currency ->
-                            arrayResource.add(currency.name)
-                        }
+                        appStatePopular.currenciesList.forEach {arrayResource.add(it.name) }
                         initSpinner()
                     }
                 }
                 is AppStatePopular.Error -> {
-                    it.popularFragmentRecyclerView.isVisible = false
-                    it.errorMessageTextView.isVisible = true
-                    it.buttonUpdate.isVisible = true
+                    bind.popularFragmentRecyclerView.isVisible = false
+                    bind.errorMessageTextView.isVisible = true
+                    bind.buttonUpdate.isVisible = true
                 }
             }
         }
@@ -82,20 +80,25 @@ class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular
     private fun initSpinner() {
         arrayAdapter = ArrayAdapter(requireContext(), layout.simple_spinner_item, arrayResource)
         binding?.spinnerPopularFragment?.adapter = arrayAdapter
-        binding?.spinnerPopularFragment?.onItemSelectedListener = this
+        binding?.spinnerPopularFragment?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                itemSelected: View, selectedItemPosition: Int, selectedId: Long
+            ) {
+                if (setSelection) viewModel.getCurrencyList(
+                    arrayAdapter?.getItem(selectedItemPosition).toString()
+                ) else setSelection = true
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
         binding?.spinnerPopularFragment?.setSelection(0)
-    }
-
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (setSelection) viewModel.getCurrencyList(arrayAdapter?.getItem(p2).toString()) else setSelection = true
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding?.buttonUpdate?.setOnClickListener(null)
+        binding?.spinnerPopularFragment?.onItemSelectedListener = null
+        binding?.spinnerPopularFragment?.adapter = null
     }
 }

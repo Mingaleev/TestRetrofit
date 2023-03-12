@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.mingaleev.testretrofit.BuildConfig
+import ru.mingaleev.testretrofit.data.retrofit.APIService
 import ru.mingaleev.testretrofit.data.room.CurrencyDatabase
 import javax.inject.Singleton
 
@@ -24,6 +25,12 @@ class ApiModule {
             CurrencyDatabase::class.java,
             "CurrenciesDb"
         ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideApi(retrofit: Retrofit): APIService {
+        return retrofit.create(APIService::class.java)
     }
 
     @Singleton
@@ -58,5 +65,4 @@ class ApiModule {
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
     }
-
 }

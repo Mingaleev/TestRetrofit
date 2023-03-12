@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.mingaleev.testretrofit.domain.AddCurrencyLocalUseCase
-import ru.mingaleev.testretrofit.domain.GetCurrenciesListRemoteUseCase
+import ru.mingaleev.testretrofit.domain.interactor.AddCurrencyLocalUseCase
+import ru.mingaleev.testretrofit.domain.interactor.GetCurrenciesListRemoteUseCase
 import ru.mingaleev.testretrofit.domain.entity.Currency
 import javax.inject.Inject
 import javax.inject.Singleton
