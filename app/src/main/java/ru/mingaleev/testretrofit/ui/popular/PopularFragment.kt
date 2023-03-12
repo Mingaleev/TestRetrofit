@@ -11,11 +11,12 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import ru.mingaleev.testretrofit.MyApp
+import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
 import javax.inject.Inject
 
 
-class PopularFragment @Inject constructor() : Fragment(ru.mingaleev.testretrofit.R.layout.fragment_popular) {
+class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular) {
 
     private var binding: FragmentPopularBinding? = null
     private var arrayAdapter: ArrayAdapter<String>? = null

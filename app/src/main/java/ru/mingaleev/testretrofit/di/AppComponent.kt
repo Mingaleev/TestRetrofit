@@ -8,7 +8,7 @@ import ru.mingaleev.testretrofit.ui.popular.PopularFragment
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApiModule::class, RepositoryModule::class])
+@Component(modules = [ApiModule::class, RepositoryModule::class, DomainModule::class])
 interface AppComponent {
 
     @Component.Factory

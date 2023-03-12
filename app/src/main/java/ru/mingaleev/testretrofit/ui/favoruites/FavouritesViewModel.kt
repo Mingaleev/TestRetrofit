@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
+import ru.mingaleev.testretrofit.domain.GetCurrenciesListLocalUseCase
+import ru.mingaleev.testretrofit.domain.GetCurrenciesListRemoteUseCase
+import ru.mingaleev.testretrofit.domain.RemoveCurrencyLocalUseCase
 import ru.mingaleev.testretrofit.domain.entity.Currency
-import ru.mingaleev.testretrofit.domain.interactor.GetCurrenciesListLocalUseCase
-import ru.mingaleev.testretrofit.domain.interactor.GetCurrenciesListRemoteUseCase
-import ru.mingaleev.testretrofit.domain.interactor.RemoveCurrencyLocalUseCase
 import javax.inject.Inject
 
 class FavouritesViewModel @Inject constructor(
