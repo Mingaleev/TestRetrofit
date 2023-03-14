@@ -19,6 +19,7 @@ class PopularFragment : DaggerFragment() {
     private var arrayAdapter: ArrayAdapter<String>? = null
     private var setSelection: Boolean = false
     private var arrayResource = mutableListOf<String>()
+    private var baseCurrency = "AED"
 
     @Inject
     lateinit var viewModel: PopularViewModel
@@ -70,21 +71,25 @@ class PopularFragment : DaggerFragment() {
         viewModel.addToDB(it)
     }
 
-    private fun initSpinner() {
-        arrayAdapter = ArrayAdapter(requireContext(), layout.simple_spinner_item, arrayResource)
-        binding?.spinnerPopularFragment?.adapter = arrayAdapter
-        binding?.spinnerPopularFragment?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+    private val onItemSelectedListener: AdapterView.OnItemSelectedListener by lazy {
+        object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 itemSelected: View, selectedItemPosition: Int, selectedId: Long
             ) {
+                baseCurrency = arrayAdapter?.getItem(selectedItemPosition).toString()
                 if (setSelection) viewModel.getCurrencyList(
-                    arrayAdapter?.getItem(selectedItemPosition).toString()
+                    baseCurrency
                 ) else setSelection = true
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+    }
+
+    private fun initSpinner() {
+        arrayAdapter = ArrayAdapter(requireContext(), layout.simple_spinner_item, arrayResource)
+        binding?.spinnerPopularFragment?.adapter = arrayAdapter
+        binding?.spinnerPopularFragment?.onItemSelectedListener = onItemSelectedListener
         binding?.spinnerPopularFragment?.setSelection(0)
     }
 

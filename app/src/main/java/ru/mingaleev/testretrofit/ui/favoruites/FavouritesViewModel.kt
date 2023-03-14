@@ -11,6 +11,7 @@ import ru.mingaleev.testretrofit.domain.RemoveCurrencyLocalUseCase
 import ru.mingaleev.testretrofit.domain.entity.Currency
 import javax.inject.Inject
 
+@Suppress("UNCHECKED_CAST")
 class FavouritesViewModel @Inject constructor(
     private val getCurrenciesListLocalUseCase: GetCurrenciesListLocalUseCase,
     private val getCurrenciesListRemoteUseCase: GetCurrenciesListRemoteUseCase,
@@ -19,22 +20,32 @@ class FavouritesViewModel @Inject constructor(
 
     private val _ratesList: MutableLiveData<AppStateFavourites> = MutableLiveData<AppStateFavourites>()
     var ratesList: LiveData<AppStateFavourites> = _ratesList
+    private var baseCurrency = "AED"
 
     init {
-        getCurrencyList()
+        getCurrencyList(baseCurrency)
     }
 
-    fun getCurrencyList() {
+    fun getCurrencyList(base: String) {
+        baseCurrency = base
+
         val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
             _ratesList.postValue(AppStateFavourites.Error(exception))
         }
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             val listLocal = async { getCurrenciesListLocalUseCase.invoke() }
-            val listRemote = async { getCurrenciesListRemoteUseCase.invoke("AED") }
-            val result = awaitAll(listLocal, listRemote)
+            val listRemote = async { getCurrenciesListRemoteUseCase.invoke(base) }
+            val listForSpinner = async {
+                val list = mutableListOf<String>()
+                listRemote.await().forEach {
+                    list.add(it.name)
+                }
+                return@async list
+            }
+            val result = awaitAll(listLocal, listRemote, listForSpinner)
             _ratesList.postValue(
                 AppStateFavourites.SuccessListExchange(
-                    filter(result[0], result[1])
+                    filter(result[0] as List<Currency>, result[1] as List<Currency>), result[2] as List<String>
                 )
             )
         }
@@ -52,7 +63,7 @@ class FavouritesViewModel @Inject constructor(
     fun removeInDB(nameCurrency: String) {
         viewModelScope.launch(Dispatchers.IO) {
             removeCurrencyLocalUseCase.invoke(nameCurrency)
-            getCurrencyList()
+            getCurrencyList(baseCurrency)
         }
     }
 }
