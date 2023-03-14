@@ -12,18 +12,17 @@ import ru.mingaleev.testretrofit.domain.interactor.GetCurrenciesListRemoteUseCas
 import ru.mingaleev.testretrofit.domain.interactor.RemoveCurrencyLocalUseCaseImp
 
 @Module
-abstract class DomainModule {
+interface DomainModule {
 
     @Binds
-    abstract fun provideAddCurrencyLocalUseCase(useCase: AddCurrencyLocalUseCaseImp): AddCurrencyLocalUseCase
+    fun provideAddCurrencyLocalUseCase(useCase: AddCurrencyLocalUseCaseImp): AddCurrencyLocalUseCase
 
     @Binds
-    abstract fun provideGetCurrenciesListLocalUseCase(useCase: GetCurrenciesListLocalUseCaseImp): GetCurrenciesListLocalUseCase
+    fun provideGetCurrenciesListLocalUseCase(useCase: GetCurrenciesListLocalUseCaseImp): GetCurrenciesListLocalUseCase
 
     @Binds
-    abstract fun provideGetCurrenciesListRemoteUseCase(useCase: GetCurrenciesListRemoteUseCaseImp): GetCurrenciesListRemoteUseCase
+    fun provideGetCurrenciesListRemoteUseCase(useCase: GetCurrenciesListRemoteUseCaseImp): GetCurrenciesListRemoteUseCase
 
     @Binds
-    abstract fun provideRemoveCurrencyLocalUseCase(useCase: RemoveCurrencyLocalUseCaseImp): RemoveCurrencyLocalUseCase
-
+    fun provideRemoveCurrencyLocalUseCase(useCase: RemoveCurrencyLocalUseCaseImp): RemoveCurrencyLocalUseCase
 }

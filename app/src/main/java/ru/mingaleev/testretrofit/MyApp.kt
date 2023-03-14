@@ -1,12 +1,13 @@
 package ru.mingaleev.testretrofit
 
-import android.app.Application
-import ru.mingaleev.testretrofit.di.AppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import ru.mingaleev.testretrofit.di.DaggerAppComponent
 
-class MyApp : Application() {
+class MyApp : DaggerApplication() {
 
-    val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(applicationContext)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().create(this).build()
     }
+
 }

@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.mingaleev.testretrofit.BuildConfig
+import ru.mingaleev.testretrofit.MyApp
 import ru.mingaleev.testretrofit.data.retrofit.APIService
 import ru.mingaleev.testretrofit.data.room.CurrencyDatabase
 import javax.inject.Singleton
@@ -17,11 +18,17 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
 
+    @Provides
+    @Singleton
+    fun context (myApp: MyApp): Context {
+        return myApp.applicationContext
+    }
+
     @Singleton
     @Provides
-    fun provideDb(app: Context): CurrencyDatabase {
+    fun provideDb(context: Context): CurrencyDatabase {
         return Room.databaseBuilder(
-            app,
+            context,
             CurrencyDatabase::class.java,
             "CurrenciesDb"
         ).build()

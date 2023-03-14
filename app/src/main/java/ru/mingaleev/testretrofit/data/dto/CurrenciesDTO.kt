@@ -13,6 +13,4 @@ data class CurrenciesDTO(
     val timestamp: Int
 )
 
-fun CurrenciesDTO.toCurrenciesList() : List<Currency> = run {
-    currencies.toList().map{ Currency(it.first, it.second) }
-}
+fun CurrenciesDTO.toCurrenciesList() : List<Currency> = currencies.toList().map{ Currency(it.first, it.second) }

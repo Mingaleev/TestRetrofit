@@ -1,7 +1,6 @@
 package ru.mingaleev.testretrofit.ui.popular
 
 import android.R.layout
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +8,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import ru.mingaleev.testretrofit.MyApp
-import ru.mingaleev.testretrofit.R
+import dagger.android.support.DaggerFragment
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
 import javax.inject.Inject
 
 
-class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular) {
+class PopularFragment : DaggerFragment() {
 
     private var binding: FragmentPopularBinding? = null
     private var arrayAdapter: ArrayAdapter<String>? = null
@@ -25,11 +22,6 @@ class PopularFragment @Inject constructor() : Fragment(R.layout.fragment_popular
 
     @Inject
     lateinit var viewModel: PopularViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity().application as MyApp).appComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPopularBinding.inflate(inflater)

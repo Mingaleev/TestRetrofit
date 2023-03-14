@@ -1,28 +1,20 @@
 package ru.mingaleev.testretrofit.ui.favoruites
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import ru.mingaleev.testretrofit.MyApp
-import ru.mingaleev.testretrofit.R
+import dagger.android.support.DaggerFragment
 import ru.mingaleev.testretrofit.databinding.FragmentFavouritesBinding
 import javax.inject.Inject
 
-class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
+class FavouritesFragment : DaggerFragment() {
 
     private var binding: FragmentFavouritesBinding? = null
 
     @Inject
     lateinit var viewModel: FavouritesViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity().application as MyApp).appComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFavouritesBinding.inflate(inflater)

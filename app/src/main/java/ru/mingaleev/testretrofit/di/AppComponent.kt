@@ -1,21 +1,37 @@
 package ru.mingaleev.testretrofit.di
 
-import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import ru.mingaleev.testretrofit.ui.favoruites.FavouritesFragment
-import ru.mingaleev.testretrofit.ui.popular.PopularFragment
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
+import ru.mingaleev.testretrofit.MyApp
 import javax.inject.Singleton
 
+
+@Component(
+    modules = [
+        ApiModule::class,
+        RepositoryModule::class,
+        DomainModule::class,
+        FragmentBindingModule::class,
+        AndroidSupportInjectionModule::class]
+)
 @Singleton
-@Component(modules = [ApiModule::class, RepositoryModule::class, DomainModule::class])
-interface AppComponent {
+interface AppComponent : AndroidInjector<MyApp> {
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun create(myApp: MyApp): Builder
+
+        fun build(): AppComponent
     }
-
-    fun inject(fragment: PopularFragment)
-    fun inject(fragment: FavouritesFragment)
 }
+//    @Component.Factory
+//    interface Factory {
+//        fun create(@BindsInstance context: Context): AppComponent
+//    }
+//
+//    fun inject(fragment: PopularFragment)
+//    fun inject(fragment: FavouritesFragment)
