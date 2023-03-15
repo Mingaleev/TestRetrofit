@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import dagger.android.support.DaggerFragment
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
+import ru.mingaleev.testretrofit.di.viewModel.ViewModelFactory
 import javax.inject.Inject
 
 
@@ -22,7 +24,8 @@ class PopularFragment : DaggerFragment() {
     private var baseCurrency = "AED"
 
     @Inject
-    lateinit var viewModel: PopularViewModel
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by viewModels<PopularViewModel> { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPopularBinding.inflate(inflater)

@@ -1,10 +1,15 @@
-package ru.mingaleev.testretrofit.di
+package ru.mingaleev.testretrofit.di.components
 
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import ru.mingaleev.testretrofit.MyApp
+import ru.mingaleev.testretrofit.di.ApiModule
+import ru.mingaleev.testretrofit.di.DomainModule
+import ru.mingaleev.testretrofit.di.FragmentBindingModule
+import ru.mingaleev.testretrofit.di.RepositoryModule
+import ru.mingaleev.testretrofit.di.viewModel.ViewModelModule
 import javax.inject.Singleton
 
 
@@ -14,7 +19,8 @@ import javax.inject.Singleton
         RepositoryModule::class,
         DomainModule::class,
         FragmentBindingModule::class,
-        AndroidSupportInjectionModule::class]
+        AndroidSupportInjectionModule::class,
+        ViewModelModule::class]
 )
 @Singleton
 interface AppComponent : AndroidInjector<MyApp> {
@@ -28,10 +34,3 @@ interface AppComponent : AndroidInjector<MyApp> {
         fun build(): AppComponent
     }
 }
-//    @Component.Factory
-//    interface Factory {
-//        fun create(@BindsInstance context: Context): AppComponent
-//    }
-//
-//    fun inject(fragment: PopularFragment)
-//    fun inject(fragment: FavouritesFragment)

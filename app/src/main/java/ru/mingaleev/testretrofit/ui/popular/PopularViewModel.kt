@@ -11,9 +11,7 @@ import ru.mingaleev.testretrofit.domain.AddCurrencyLocalUseCase
 import ru.mingaleev.testretrofit.domain.GetCurrenciesListRemoteUseCase
 import ru.mingaleev.testretrofit.domain.entity.Currency
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class PopularViewModel @Inject constructor(
     private val getCurrencyListUseCase: GetCurrenciesListRemoteUseCase,
     private val addCurrencyToDBUseCase: AddCurrencyLocalUseCase
