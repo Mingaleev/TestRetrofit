@@ -35,29 +35,27 @@ class FavouritesViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             val listLocal = async { getCurrenciesListLocalUseCase.invoke() }
             val listRemote = async { getCurrenciesListRemoteUseCase.invoke(base) }
-            val listForSpinner = async {
-                val list = mutableListOf<String>()
-                listRemote.await().forEach {
-                    list.add(it.name)
-                }
-                return@async list
-            }
-            val result = awaitAll(listLocal, listRemote, listForSpinner)
+            val result = awaitAll(listLocal, listRemote)
             _ratesList.postValue(
                 AppStateFavourites.SuccessListExchange(
-                    filter(result[0] as List<Currency>, result[1] as List<Currency>), result[2] as List<String>
+                    filter(result[0] as List<String>, result[1] as List<Currency>),
+                    listForSpinner(result[1] as List<Currency>)
                 )
             )
         }
     }
 
-    private fun filter(listLocal: List<Currency>, listRemote: List<Currency>): List<Currency> {
-        listLocal.forEach { local ->
-            listRemote.forEach {
-                if (it.name == local.name) local.rate = it.rate
-            }
+    private fun filter(listLocal: List<String>, listRemote: List<Currency>): List<Currency> {
+        val listRemoteMap: Map<String, Double> = listRemote.associate { Pair(it.name, it.rate) }.toMap()
+        val result = mutableListOf<Currency>()
+        listLocal.forEach {
+            result.add(Currency(it, listRemoteMap[it]!!))
         }
-        return listLocal
+        return result
+    }
+
+    private fun listForSpinner(list: List<Currency>): List<String> {
+        return list.map { it.name }
     }
 
     fun removeInDB(nameCurrency: String) {
