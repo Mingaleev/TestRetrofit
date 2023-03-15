@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.mingaleev.testretrofit.domain.AddCurrencyLocalUseCase
@@ -26,12 +27,12 @@ class PopularViewModel @Inject constructor(
     }
 
     fun getCurrencyList(base: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                _ratesList.postValue(AppStatePopular.SuccessListExchange(getCurrencyListUseCase.invoke(base)))
-            } catch (e: Exception) {
-                _ratesList.postValue(AppStatePopular.Error(e))
-            }
+        val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+            _ratesList.postValue(AppStatePopular.Error(exception))
+        }
+
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            _ratesList.postValue(AppStatePopular.SuccessListExchange(getCurrencyListUseCase.invoke(base)))
         }
     }
 
