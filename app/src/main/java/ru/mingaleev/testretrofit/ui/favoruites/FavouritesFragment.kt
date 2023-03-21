@@ -1,6 +1,5 @@
 package ru.mingaleev.testretrofit.ui.favoruites
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.example.core.di.viewModel.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import android.R.layout
 import ru.mingaleev.testretrofit.databinding.FragmentFavouritesBinding
-import ru.mingaleev.testretrofit.di.viewModel.ViewModelFactory
 import javax.inject.Inject
 
 class FavouritesFragment : DaggerFragment() {
@@ -67,24 +67,21 @@ class FavouritesFragment : DaggerFragment() {
         }
     }
 
-    private val onItemSelectedListener: AdapterView.OnItemSelectedListener by lazy {
+    private val onItemSelectedListener: AdapterView.OnItemSelectedListener =
         object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 itemSelected: View, selectedItemPosition: Int, selectedId: Long
             ) {
                 baseCurrency = arrayAdapter?.getItem(selectedItemPosition).toString()
-                if (setSelection) viewModel.getCurrencyList(
-                    baseCurrency
-                ) else setSelection = true
+                if (setSelection) viewModel.getCurrencyList(baseCurrency) else setSelection = true
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-    }
+
 
     private fun initSpinner() {
-        arrayAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, arrayResource)
+        arrayAdapter = ArrayAdapter(requireContext(), layout.simple_spinner_item, arrayResource)
         binding?.spinnerPopularFragment?.adapter = arrayAdapter
         binding?.spinnerPopularFragment?.onItemSelectedListener = onItemSelectedListener
         binding?.spinnerPopularFragment?.setSelection(0)
@@ -97,5 +94,7 @@ class FavouritesFragment : DaggerFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding?.buttonUpdate?.setOnClickListener(null)
+        binding?.spinnerPopularFragment?.onItemSelectedListener = null
+        binding?.spinnerPopularFragment?.adapter = null
     }
 }

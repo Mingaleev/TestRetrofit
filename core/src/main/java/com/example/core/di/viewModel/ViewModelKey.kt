@@ -1,4 +1,4 @@
-package ru.mingaleev.testretrofit.di.viewModel
+package com.example.core.di.viewModel
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

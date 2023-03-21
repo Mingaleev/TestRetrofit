@@ -46,6 +46,8 @@ android {
 
 dependencies {
 
+    implementation(project(':core'))
+
     //Dagger
     implementation project.deps.dagger
     kapt project.deps.daggerCompilerKapt

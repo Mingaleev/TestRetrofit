@@ -2,6 +2,8 @@ package ru.mingaleev.testretrofit.di.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.core.di.viewModel.ViewModelFactory
+import com.example.core.di.viewModel.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

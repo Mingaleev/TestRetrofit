@@ -9,9 +9,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.example.core.di.viewModel.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
-import ru.mingaleev.testretrofit.di.viewModel.ViewModelFactory
 import javax.inject.Inject
 
 
