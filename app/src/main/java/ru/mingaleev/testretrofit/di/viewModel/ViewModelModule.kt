@@ -1,8 +1,6 @@
 package ru.mingaleev.testretrofit.di.viewModel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.core.di.viewModel.ViewModelFactory
 import com.example.core.di.viewModel.ViewModelKey
 import dagger.Binds
 import dagger.Module
@@ -22,7 +20,4 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(FavouritesViewModel::class)
     fun bindFavouritesViewModel(viewModel: FavouritesViewModel): ViewModel
-
-    @Binds
-    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

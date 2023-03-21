@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "TestRetrofit"
 include ':app'
 include ':core'
+include ':favourites'
 include ':popular'
