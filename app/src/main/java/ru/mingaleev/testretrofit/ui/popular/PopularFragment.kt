@@ -1,22 +1,31 @@
 package ru.mingaleev.testretrofit.ui.popular
 
+import android.R.layout
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import ru.mingaleev.testretrofit.R
+import androidx.fragment.app.viewModels
+import dagger.android.support.DaggerFragment
 import ru.mingaleev.testretrofit.databinding.FragmentPopularBinding
+import ru.mingaleev.testretrofit.di.viewModel.ViewModelFactory
+import javax.inject.Inject
 
-class PopularFragment : Fragment(R.layout.fragment_popular) {
+
+class PopularFragment : DaggerFragment() {
 
     private var binding: FragmentPopularBinding? = null
+    private var arrayAdapter: ArrayAdapter<String>? = null
+    private var setSelection: Boolean = false
+    private var arrayResource = mutableListOf<String>()
+    private var baseCurrency = "AED"
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[PopularViewModel::class.java]
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by viewModels<PopularViewModel> { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPopularBinding.inflate(inflater)
@@ -31,24 +40,31 @@ class PopularFragment : Fragment(R.layout.fragment_popular) {
         }
 
         binding?.buttonUpdate?.setOnClickListener {
-            viewModel.getCurrencyList()
+            viewModel.getCurrencyList("AED")
         }
+
+        initSpinner()
     }
 
     private fun renderData(appStatePopular: AppStatePopular) {
-        binding?.also {
+        binding?.also { bind ->
             when (appStatePopular) {
                 is AppStatePopular.SuccessListExchange -> {
-                    it.popularFragmentRecyclerView.isVisible = true
-                    it.popularFragmentRecyclerView.adapter =
+                    bind.popularFragmentRecyclerView.isVisible = true
+                    bind.popularFragmentRecyclerView.adapter =
                         PopularAdapter(appStatePopular.currenciesList, callbackAdd)
-                    it.errorMessageTextView.isVisible = false
-                    it.buttonUpdate.isVisible = false
+                    bind.errorMessageTextView.isVisible = false
+                    bind.buttonUpdate.isVisible = false
+
+                    if (arrayResource.isEmpty()) {
+                        appStatePopular.currenciesList.forEach {arrayResource.add(it.name) }
+                        initSpinner()
+                    }
                 }
                 is AppStatePopular.Error -> {
-                    it.popularFragmentRecyclerView.isVisible = false
-                    it.errorMessageTextView.isVisible = true
-                    it.buttonUpdate.isVisible = true
+                    bind.popularFragmentRecyclerView.isVisible = false
+                    bind.errorMessageTextView.isVisible = true
+                    bind.buttonUpdate.isVisible = true
                 }
             }
         }
@@ -58,8 +74,32 @@ class PopularFragment : Fragment(R.layout.fragment_popular) {
         viewModel.addToDB(it)
     }
 
+    private val onItemSelectedListener: AdapterView.OnItemSelectedListener by lazy {
+        object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                itemSelected: View, selectedItemPosition: Int, selectedId: Long
+            ) {
+                baseCurrency = arrayAdapter?.getItem(selectedItemPosition).toString()
+                if (setSelection) viewModel.getCurrencyList(
+                    baseCurrency
+                ) else setSelection = true
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun initSpinner() {
+        arrayAdapter = ArrayAdapter(requireContext(), layout.simple_spinner_item, arrayResource)
+        binding?.spinnerPopularFragment?.adapter = arrayAdapter
+        binding?.spinnerPopularFragment?.onItemSelectedListener = onItemSelectedListener
+        binding?.spinnerPopularFragment?.setSelection(0)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding?.buttonUpdate?.setOnClickListener(null)
+        binding?.spinnerPopularFragment?.onItemSelectedListener = null
+        binding?.spinnerPopularFragment?.adapter = null
     }
 }
