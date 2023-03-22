@@ -1,11 +1,13 @@
 package ru.mingaleev.testretrofit.di
 
+import com.example.core.data.RepositoryLocal
+import com.example.core.data.RepositoryRemote
+import com.example.core.data.retrofit.RepositoryRemoteImp
+import com.example.core.data.room.RepositoryLocalImp
 import dagger.Binds
 import dagger.Module
-import ru.mingaleev.testretrofit.data.RepositoryLocal
-import ru.mingaleev.testretrofit.data.RepositoryRemote
-import ru.mingaleev.testretrofit.data.retrofit.RepositoryRemoteImp
-import ru.mingaleev.testretrofit.data.room.RepositoryLocalImp
+
+
 
 @Module
 abstract class RepositoryModule {

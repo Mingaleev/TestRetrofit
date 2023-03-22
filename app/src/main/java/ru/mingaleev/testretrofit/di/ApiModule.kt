@@ -2,6 +2,8 @@ package ru.mingaleev.testretrofit.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.core.data.retrofit.APIService
+import com.example.core.data.room.CurrencyDatabase
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -10,8 +12,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.mingaleev.testretrofit.BuildConfig
-import ru.mingaleev.testretrofit.data.retrofit.APIService
-import ru.mingaleev.testretrofit.data.room.CurrencyDatabase
 import javax.inject.Singleton
 
 @Module

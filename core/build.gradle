@@ -20,6 +20,19 @@ dependencies {
     kapt project.deps.daggerAndroidProcessorKapt
     implementation project.deps.daggerAndroidSupport
 
+    //Coroutines
+    implementation project.deps.coroutines
+
+    //Retrofit
+    implementation project.deps.retrofit2
+    implementation project.deps.retrofit2ConverterGson
+    implementation project.deps.okhttp3
+
+    //Room
+    implementation project.deps.roomRuntime
+    implementation project.deps.roomKtx
+    kapt project.deps.roomCompilerKapt
+
     implementation project.deps.coreKtx
     implementation project.deps.appcompat
     implementation project.deps.material

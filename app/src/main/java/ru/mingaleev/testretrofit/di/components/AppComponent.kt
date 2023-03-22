@@ -6,7 +6,6 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import ru.mingaleev.testretrofit.MyApp
 import ru.mingaleev.testretrofit.di.*
-import ru.mingaleev.testretrofit.di.viewModel.ViewModelModule
 import javax.inject.Singleton
 
 
@@ -15,10 +14,9 @@ import javax.inject.Singleton
         AppModule::class,
         ApiModule::class,
         RepositoryModule::class,
-        DomainModule::class,
         FragmentModule::class,
         AndroidSupportInjectionModule::class,
-        ViewModelModule::class]
+    ]
 )
 @Singleton
 interface AppComponent : AndroidInjector<MyApp> {

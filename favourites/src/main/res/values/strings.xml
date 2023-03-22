@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">favoruites</string>
+
+    <!--    Menu Top Navigation-->
+    <string name="sort">Сортировка</string>
+
+    <!--    Fragment Popular-->
+    <string name="error_message">Произошла ошибка загрузки, попробуйте обновить</string>
+    <string name="update_button">Обновить</string>
+
 </resources>
