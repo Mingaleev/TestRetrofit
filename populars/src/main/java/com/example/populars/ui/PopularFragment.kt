@@ -27,6 +27,21 @@ class PopularFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<PopularViewModel> { viewModelFactory }
 
+    private val onItemSelectedListener: AdapterView.OnItemSelectedListener by lazy {
+        object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                itemSelected: View, selectedItemPosition: Int, selectedId: Long
+            ) {
+                baseCurrency = arrayAdapter?.getItem(selectedItemPosition).toString()
+                if (setSelection) viewModel.getCurrencyList(
+                    baseCurrency
+                ) else setSelection = true
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPopularBinding.inflate(inflater)
         return binding!!.root
@@ -72,21 +87,6 @@ class PopularFragment : DaggerFragment() {
 
     private val callbackAdd = AddItem {
         viewModel.addToDB(it)
-    }
-
-    private val onItemSelectedListener: AdapterView.OnItemSelectedListener by lazy {
-        object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                itemSelected: View, selectedItemPosition: Int, selectedId: Long
-            ) {
-                baseCurrency = arrayAdapter?.getItem(selectedItemPosition).toString()
-                if (setSelection) viewModel.getCurrencyList(
-                    baseCurrency
-                ) else setSelection = true
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
     }
 
     private fun initSpinner() {
