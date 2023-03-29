@@ -3,7 +3,7 @@ package com.example.populars.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.entity.Currency
+import com.example.currency_data_api.entity.Currency
 import com.example.populars.databinding.FragmentPopularRecyclerItemBinding
 
 class PopularAdapter(private val dataList: List<Currency>, val callbackAdd: AddItem): RecyclerView.Adapter<PopularAdapter.CurrencyViewHolder>() {

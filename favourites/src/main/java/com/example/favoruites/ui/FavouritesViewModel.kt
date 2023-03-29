@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.entity.Currency
+import com.example.currency_data_api.entity.Currency
 import com.example.favoruites.domain.GetCurrenciesListLocalUseCase
 import com.example.favoruites.domain.GetCurrenciesListRemoteUseCase
 import com.example.favoruites.domain.RemoveCurrencyLocalUseCase

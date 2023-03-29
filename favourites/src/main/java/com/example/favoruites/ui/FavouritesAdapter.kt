@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.entity.Currency
+import com.example.currency_data_api.entity.Currency
 import com.example.favoruites.databinding.FragmentFavouritesRecyclerItemBinding
 
 class FavouritesAdapter(private val dataList: List<Currency>, val callbackRemove: RemoveItem) :

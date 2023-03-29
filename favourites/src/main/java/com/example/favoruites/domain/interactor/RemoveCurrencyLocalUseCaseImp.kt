@@ -1,6 +1,6 @@
 package com.example.favoruites.domain.interactor
 
-import com.example.core.data.RepositoryLocal
+import com.example.currency_data_api.RepositoryLocal
 import com.example.favoruites.domain.RemoveCurrencyLocalUseCase
 import javax.inject.Inject
 

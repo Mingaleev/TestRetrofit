@@ -1,8 +1,9 @@
 package com.example.favoruites.domain.interactor
 
-import com.example.core.data.RepositoryRemote
-import com.example.core.data.dto.toCurrenciesList
-import com.example.core.entity.Currency
+
+import com.example.currency_data_api.RepositoryRemote
+import com.example.currency_data_api.dto.toCurrenciesList
+import com.example.currency_data_api.entity.Currency
 import com.example.favoruites.domain.GetCurrenciesListRemoteUseCase
 import javax.inject.Inject
 

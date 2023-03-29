@@ -1,8 +1,8 @@
 package com.example.populars.domain.usecase.interactor
 
-import com.example.core.data.RepositoryLocal
-import com.example.core.data.room.CurrencyRoom
-import com.example.core.entity.Currency
+import com.example.currency_data_api.CurrencyRoom
+import com.example.currency_data_api.RepositoryLocal
+import com.example.currency_data_api.entity.Currency
 import com.example.populars.domain.usecase.AddCurrencyLocalUseCase
 import javax.inject.Inject
 

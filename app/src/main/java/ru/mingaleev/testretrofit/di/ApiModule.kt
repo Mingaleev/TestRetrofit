@@ -2,8 +2,8 @@ package ru.mingaleev.testretrofit.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.core.data.retrofit.APIService
-import com.example.core.data.room.CurrencyDatabase
+import com.example.currency_data.retrofit.APIService
+import com.example.currency_data.room.CurrencyDatabase
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
