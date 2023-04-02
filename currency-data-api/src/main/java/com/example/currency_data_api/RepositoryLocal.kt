@@ -6,11 +6,11 @@ import androidx.room.Insert
 interface RepositoryLocal {
 
     @Insert
-    suspend fun insert(currency: CurrencyRoom)
+    suspend fun insert(currency: String)
 
     @Delete
     suspend fun delete(nameCurrency: String)
 
     @androidx.room.Query("SELECT * FROM currency")
-    suspend fun get(): List<CurrencyRoom>
+    suspend fun get(): List<String>
 }

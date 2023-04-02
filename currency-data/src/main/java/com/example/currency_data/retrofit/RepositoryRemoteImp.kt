@@ -12,6 +12,6 @@ class RepositoryRemoteImp @Inject constructor(
 
     override suspend fun getExchange(base: String): List<CurrencyApi> {
         val currenciesDTO = apiService.getExchange(base)
-        return currenciesMapper.mapCurrencies(currenciesDTO)
+        return currenciesMapper.mapCurrenciesFromDTO(currenciesDTO)
     }
 }
