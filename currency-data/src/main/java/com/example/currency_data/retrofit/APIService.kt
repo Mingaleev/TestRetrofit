@@ -1,6 +1,6 @@
 package com.example.currency_data.retrofit
 
-import com.example.currency_data_api.dto.CurrenciesDTO
+import com.example.currency_data.dto.CurrenciesDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 

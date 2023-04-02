@@ -1,6 +1,6 @@
-package com.example.currency_data_api.dto
+package com.example.currency_data.dto
 
-import com.example.currency_data_api.entity.Currency
+import com.example.currency_data_api.entity.CurrencyApi
 import com.google.gson.annotations.SerializedName
 
 data class CurrenciesDTO(
@@ -12,4 +12,4 @@ data class CurrenciesDTO(
     val timestamp: Int
 )
 
-fun CurrenciesDTO.toCurrenciesList() : List<Currency> = currencies.toList().map{ Currency(it.first, it.second) }
+fun CurrenciesDTO.toCurrenciesList() : List<CurrencyApi> = currencies.toList().map{ CurrencyApi(it.first, it.second) }

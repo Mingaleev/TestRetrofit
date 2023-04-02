@@ -49,8 +49,8 @@ dependencies {
     implementation(project(':core'))
     implementation(project(':populars'))
     implementation(project(':favourites'))
-    implementation implementation(project(':currency-data',))
-    implementation implementation(project(':currency-data-api',))
+    implementation implementation(project(':currency-data'))
+    implementation implementation(project(':currency-data-api'))
 
     //Dagger
     implementation project.deps.dagger

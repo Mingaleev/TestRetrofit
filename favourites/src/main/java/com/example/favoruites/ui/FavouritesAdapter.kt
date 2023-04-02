@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.currency_data_api.entity.Currency
+import com.example.currency_data_api.entity.CurrencyApi
 import com.example.favoruites.databinding.FragmentFavouritesRecyclerItemBinding
 
-class FavouritesAdapter(private val dataList: List<Currency>, val callbackRemove: RemoveItem) :
+class FavouritesAdapter(private val dataList: List<CurrencyApi>, val callbackRemove: RemoveItem) :
     RecyclerView.Adapter<FavouritesAdapter.CurrencyViewHolder>() {
 
     inner class CurrencyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(currency: Currency) {
+        fun bind(currency: CurrencyApi) {
             FragmentFavouritesRecyclerItemBinding.bind(itemView).also {
                 it.currency.text = "${currency.name} = "
                 it.spot.text = currency.rate.toString()

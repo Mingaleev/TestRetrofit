@@ -1,13 +1,11 @@
 package com.example.favoruites.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.currency_data_api.entity.Currency
+import androidx.lifecycle.*
+import com.example.currency_data_api.entity.CurrencyApi
 import com.example.favoruites.domain.GetCurrenciesListLocalUseCase
 import com.example.favoruites.domain.GetCurrenciesListRemoteUseCase
 import com.example.favoruites.domain.RemoveCurrencyLocalUseCase
+import com.example.favoruites.domain.SortedAlphabetCurrenciesListUseCase
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -15,12 +13,18 @@ import javax.inject.Inject
 class FavouritesViewModel @Inject constructor(
     private val getCurrenciesListLocalUseCase: GetCurrenciesListLocalUseCase,
     private val getCurrenciesListRemoteUseCase: GetCurrenciesListRemoteUseCase,
-    private val removeCurrencyLocalUseCase: RemoveCurrencyLocalUseCase
+    private val removeCurrencyLocalUseCase: RemoveCurrencyLocalUseCase,
+//    private val sortedAlphabetCurrenciesListUseCase: SortedAlphabetCurrenciesListUseCase
+
 ) : ViewModel() {
 
     private val _ratesList: MutableLiveData<AppStateFavourites> = MutableLiveData<AppStateFavourites>()
     var ratesList: LiveData<AppStateFavourites> = _ratesList
     private var baseCurrency = "AED"
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        _ratesList.postValue(AppStateFavourites.Error(exception))
+    }
 
     init {
         getCurrencyList(baseCurrency)
@@ -29,32 +33,35 @@ class FavouritesViewModel @Inject constructor(
     fun getCurrencyList(base: String) {
         baseCurrency = base
 
-        val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-            _ratesList.postValue(AppStateFavourites.Error(exception))
-        }
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             val listLocal = async { getCurrenciesListLocalUseCase.invoke() }
             val listRemote = async { getCurrenciesListRemoteUseCase.invoke(base) }
             val result = awaitAll(listLocal, listRemote)
             _ratesList.postValue(
                 AppStateFavourites.SuccessListExchange(
-                    filter(result[0] as List<String>, result[1] as List<Currency>),
-                    listForSpinner(result[1] as List<Currency>)
+                    filter(result[0] as List<String>, result[1] as List<CurrencyApi>),
+                    listForSpinner(result[1] as List<CurrencyApi>)
                 )
             )
         }
     }
 
-    private fun filter(listLocal: List<String>, listRemote: List<Currency>): List<Currency> {
+//    fun sortedAlphabet () {
+//        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+//            sortedAlphabetCurrenciesListUseCase.invoke()
+//        }
+//    }
+
+    private fun filter(listLocal: List<String>, listRemote: List<CurrencyApi>): List<CurrencyApi> {
         val listRemoteMap: Map<String, Double> = listRemote.associate { Pair(it.name, it.rate) }.toMap()
-        val result = mutableListOf<Currency>()
+        val result = mutableListOf<CurrencyApi>()
         listLocal.forEach {
-            result.add(Currency(it, listRemoteMap[it]!!))
+            result.add(CurrencyApi(it, listRemoteMap[it]!!))
         }
         return result
     }
 
-    private fun listForSpinner(list: List<Currency>): List<String> {
+    private fun listForSpinner(list: List<CurrencyApi>): List<String> {
         return list.map { it.name }
     }
 

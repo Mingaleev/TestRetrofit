@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.currency_data_api.entity.Currency
+import com.example.currency_data_api.entity.CurrencyApi
 import com.example.populars.domain.usecase.AddCurrencyLocalUseCase
 import com.example.populars.domain.usecase.GetCurrenciesListRemoteUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -34,7 +34,7 @@ class PopularViewModel @Inject constructor(
         }
     }
 
-    fun addToDB (currency: Currency) {
+    fun addToDB (currency: CurrencyApi) {
         viewModelScope.launch(Dispatchers.IO) {
             addCurrencyToDBUseCase.invoke(currency)
         }

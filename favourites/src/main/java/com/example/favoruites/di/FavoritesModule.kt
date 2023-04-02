@@ -5,9 +5,11 @@ import com.example.core.di.viewModel.ViewModelKey
 import com.example.favoruites.domain.GetCurrenciesListLocalUseCase
 import com.example.favoruites.domain.GetCurrenciesListRemoteUseCase
 import com.example.favoruites.domain.RemoveCurrencyLocalUseCase
+import com.example.favoruites.domain.SortedAlphabetCurrenciesListUseCase
 import com.example.favoruites.domain.interactor.GetCurrenciesListLocalUseCaseImp
 import com.example.favoruites.domain.interactor.GetCurrenciesListRemoteUseCaseImp
 import com.example.favoruites.domain.interactor.RemoveCurrencyLocalUseCaseImp
+import com.example.favoruites.domain.interactor.SortedAlphabetCurrenciesListUseCaseImp
 import com.example.favoruites.ui.FavouritesViewModel
 import dagger.Binds
 import dagger.Module
@@ -29,4 +31,7 @@ interface FavoritesModule {
 
     @Binds
     fun provideRemoveCurrencyLocalUseCase(useCase: RemoveCurrencyLocalUseCaseImp): RemoveCurrencyLocalUseCase
+
+    @Binds
+    fun provideSortedAlphabetCurrenciesListUseCase(useCase: SortedAlphabetCurrenciesListUseCaseImp): SortedAlphabetCurrenciesListUseCase
 }

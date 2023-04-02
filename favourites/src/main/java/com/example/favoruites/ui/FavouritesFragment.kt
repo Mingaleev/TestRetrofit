@@ -11,7 +11,12 @@ import androidx.fragment.app.viewModels
 import com.example.core.di.viewModel.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import android.R.layout
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.favoruites.R
+import com.example.favoruites.databinding.BottomSheetBinding
 import com.example.favoruites.databinding.FragmentFavouritesBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import javax.inject.Inject
 
 class FavouritesFragment : DaggerFragment() {
@@ -54,6 +59,18 @@ class FavouritesFragment : DaggerFragment() {
 
         binding?.buttonUpdate?.setOnClickListener {
             viewModel.getCurrencyList(baseCurrency)
+        }
+
+        initBottomSheetSort()
+    }
+
+    private fun initBottomSheetSort () {
+        binding?.sort?.setOnClickListener {
+            val dialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
+
+            dialog.setContentView(view)
+            dialog.show()
         }
     }
 
