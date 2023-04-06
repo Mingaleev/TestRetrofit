@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">favoruites</string>
+
+    <!--    Menu Top Navigation-->
+    <string name="sort">Сортировка</string>
+
+    <!--    Fragment Popular-->
+    <string name="error_message">Произошла ошибка загрузки, попробуйте обновить</string>
+    <string name="update_button">Обновить</string>
+
+    <!--    Bottom Sheet-->
+    <string name="sorting">Сортировать по:</string>
+    <string name="alphabet">По алфавиту</string>
+    <string name="by_value">По значению</string>
+    <string name="sort_down">по убыванию</string>
+    <string name="sort_up">по возрастанию</string>
+
+</resources>

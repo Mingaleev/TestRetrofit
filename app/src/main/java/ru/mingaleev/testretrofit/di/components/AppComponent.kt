@@ -1,26 +1,23 @@
 package ru.mingaleev.testretrofit.di.components
 
+import com.example.currency_data.di.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import ru.mingaleev.testretrofit.MyApp
-import ru.mingaleev.testretrofit.di.ApiModule
-import ru.mingaleev.testretrofit.di.DomainModule
-import ru.mingaleev.testretrofit.di.FragmentBindingModule
-import ru.mingaleev.testretrofit.di.RepositoryModule
-import ru.mingaleev.testretrofit.di.viewModel.ViewModelModule
+import ru.mingaleev.testretrofit.di.*
 import javax.inject.Singleton
 
 
 @Component(
     modules = [
+        AppModule::class,
         ApiModule::class,
-        RepositoryModule::class,
-        DomainModule::class,
-        FragmentBindingModule::class,
+        FragmentModule::class,
         AndroidSupportInjectionModule::class,
-        ViewModelModule::class]
+        RepositoryModule::class
+    ]
 )
 @Singleton
 interface AppComponent : AndroidInjector<MyApp> {

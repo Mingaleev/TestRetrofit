@@ -14,3 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TestRetrofit"
 include ':app'
+include ':core'
+include ':favourites'
+include ':populars'
+include ':currency-data-api'
+include ':currency-data'

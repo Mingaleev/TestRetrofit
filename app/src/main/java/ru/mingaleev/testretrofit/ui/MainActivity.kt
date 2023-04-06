@@ -1,18 +1,19 @@
 package ru.mingaleev.testretrofit.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.favoruites.ui.FavouritesFragment
+import com.example.populars.ui.PopularFragment
 import ru.mingaleev.testretrofit.R
 import ru.mingaleev.testretrofit.databinding.ActivityMainBinding
-import ru.mingaleev.testretrofit.ui.favoruites.FavouritesFragment
-import ru.mingaleev.testretrofit.ui.popular.PopularFragment
 
 class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
 
+    @SuppressLint("CommitTransaction")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("CommitTransaction")
     private fun navigateTo(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
